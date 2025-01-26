@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BareBonesTweet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+</style>
+<body>
+
+    <nav class="bg-gradient-to-br from-purple-600 to-blue-500 text-white py-4 shadow-md">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="text-xl font-bold tracking-wide flex items-center">
+                <i class="fas fa-dove mr-2"></i>
+                BareBonesTweet
+            </div>
+            <div class="flex space-x-6">
+                <a href="/tweets" class="relative font-medium hover:text-white hover:scale-105 transition-all duration-300">
+                    <i class="fas fa-stream mr-2"></i>
+                    Tweets
+                    <span class="absolute bottom-[-5px] left-0 w-full h-[2px] bg-white transform scale-x-0 hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+                <a href="/create-tweet" class="relative font-medium hover:text-white hover:scale-105 transition-all duration-300">
+                    <i class="fas fa-plus-circle mr-2"></i>
+                    Create Tweet
+                    <span class="absolute bottom-[-5px] left-0 w-full h-[2px] bg-white transform scale-x-0 hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto my-10 px-5">
+        <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg transition-all duration-300 transform hover:translate-y-[-10px] hover:shadow-xl tweet-card">
+            <h2 class="text-2xl font-semibold mb-6">Create Tweet</h2>
+            <form action="/create" method="POST">
+                <textarea name="tweet_content" rows="5" class="w-full p-3 border rounded-lg mb-4" placeholder="Write your tweet..."></textarea>
+                <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg">Post Tweet</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

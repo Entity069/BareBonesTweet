@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BareBonesTweet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+</style>
+<body>
+    <nav class="bg-gradient-to-r from-purple-600 to-blue-500 text-white py-4 shadow-md">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="text-xl font-bold tracking-wider flex items-center">
+                <i class="fas fa-dove mr-3"></i>
+                BareBonesTweet
+            </div>
+            <div class="flex space-x-6">
+                <a href="/tweets" class="transition duration-300 transform hover:scale-105 hover:text-white relative group">
+                    <i class="fas fa-stream mr-2"></i>
+                    Tweets
+                    <span class="absolute bottom-[-5px] left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition duration-300"></span>
+                </a>
+                <a href="/create-tweet" class="transition duration-300 transform hover:scale-105 hover:text-white relative group">
+                    <i class="fas fa-plus-circle mr-2"></i>
+                    Create Tweet
+                    <span class="absolute bottom-[-5px] left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition duration-300"></span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <main class="container mx-auto my-10 px-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+            {% for tweet in tweets %}
+            <div class="bg-white p-5 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-2.5 transition-all duration-300 relative min-h-[200px] flex flex-col">
+                <p class="text-sm text-gray-500">{{ tweet.timestamp }}</p>
+                <p class="flex-grow mb-2.5">{{ tweet.tweet_content }}</p>
+                <div class="absolute bottom-5 left-5 flex items-center space-x-2">
+                    <button class="like-btn text-xl" data-tweet-id="{{ tweet.id }}">
+                        <i class="fas fa-thumbs-up"></i>
+                    </button>
+                    <span class="text-sm text-gray-600" id="like-count-{{ tweet.id }}">{{ tweet.likes }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <script>
+        $(document).ready(function() {
+            $('.like-btn').on('click', function() {
+                var tweetId = $(this).data('tweet-id');
+                var likeCountElement = $('#like-count-' + tweetId);
+                $.ajax({
+                    url: '/like',
+                    type: 'POST',
+                    data: { 'id': tweetId },
+                    contentType: 'application/json',
+                    success: function(response) {
+                        var response = JSON.parse(response.replace(/'/g, '"'))
+                        if (response.status === "200") {
+                            let currentLikes = parseInt(likeCountElement.text());
+                            likeCountElement.text(currentLikes + 1);
+                        } else {
+                            console.log(response.status)
+                            console.log('Error: Unable to like the tweet.');
+                        }
+                    },
+                    error: function() {
+                        console.log('Error: Unable to make the request.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
