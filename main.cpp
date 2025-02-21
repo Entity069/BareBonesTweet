@@ -64,7 +64,7 @@ int main() {
             });
         }
 
-        std::string template_str = loadFile("/home/entity069/projects/cpp-webframework/templates/home.html");
+        std::string template_str = loadFile("./templates/home.html");
         std::string rendered = env.render(template_str, context);
 
         res.setBody(rendered);
@@ -73,7 +73,7 @@ int main() {
 
     server.route("GET", "/create-tweet", [](Request& req, Response& res) {
         res.setContentType(MIME_HTML);
-        std::string template_str = loadFile("/home/entity069/projects/cpp-webframework/templates/create.html");
+        std::string template_str = loadFile("./templates/create.html");
         res.setBody(template_str);
     });
 
